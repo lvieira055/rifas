@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from banco import Banco
 app = Flask(__name__)
+#oi bb
 
 #conexao com o banco de dados
 
