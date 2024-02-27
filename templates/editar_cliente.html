@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='novo_paciente.css') }}">
+    {% include "navbar.html" %}
+</head>
+<body>
+    <div class="container mt-3">
+        <div class="card" >
+            <div class="card-header">
+                Alteração de clientes
+            </div>
+            <div class="card-body">
+        {% for cli in cliente%}
+        <h1>Alterar cliente</h1>
+        <form action="{{ url_for('editar_cliente',idcliente=cli[0])}}" method="POST">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" value={{cli[1]}}>
+            </div>
+            <div class="mb-3">
+                <label for="idade" class="form-label">Idade</label>
+                <input type="number" class="form-control" id="idade" name="idade" placeholder="Digite sua idade" value={{cli[2]}} required>
+            </div>
+            <div class="mb-3">
+                <label for="sexo" class="form-label">Sexo</label>
+                <input type="text" class="form-control" id="sexo" name="sexo" placeholder="Digite seu sexo" value={{cli[3]}} required>
+            </div>
+            <div class="mb-3">
+                <label for="cpf" class="form-label">CPF</label>
+                <input type="text" class="form-control" name="cpf" id="cpf" placeholder="999.999.999-99" value={{cli[4]}} required>
+            </div>
+            <div class="d-grid gap-2">
+                <input class="btn btn-primary" type="submit" value="Alterar Cliente"></input>
+              </div><br>
+        </form>
+        <div class="d-grid gap-2">
+            <a href="{{url_for('novo_contato',idcliente=cli[0]) }}" class="btn btn-primary" type="submit">Contato </a><a class="btn btn-primary" type="submit">Endereço</a>
+        </div>
+    </div>
+    {%endfor%}
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Novo Contato</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    {% include "navbar.html" %}
+</head>
+<body>
+    <div class="container mt-3">
+    <div class="card" >
+        <div class="card-header">
+            Adicionar Novo Contato
+        </div>
+        {% for cli in cliente%}
+        <div class="card-body">
+            <form action="{{ url_for('novo_contato',idcliente=cli[0]) }}" method="POST">
+                <div class="mb-3">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input type="number" class="form-control" id="telefone" name="telefone" placeholder="Digite o telefone do cliente" required>
+                </div>
+                <div class="d-grid gap-2">
+                    <a href="{{url_for('criar_contato', idcliente=cli[0])}}"class="btn btn-primary" type="submit" value="Adicionar Contato">Adicionar contato</a>
+                  </div>
+            </form>
+        </div>
+        {%endfor%}
+    </div>
+</div>    
+</body>
+</html>
