@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Lista de Rifas</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    {% include "navbar.html" %}
+
+</head>
+
+<body>
+    <div class="container mt-3">
+        <div class="card">
+          <div class="card-header">
+            Lista de Rifas
+          </div>
+          <div class="card-body">
+            <table class="table table-striped", name="td-rifas">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Prêmio</th>
+                    <th scope="col">Tamanho</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Valor Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for rifa in rifas %}
+                  <tr>
+                    <th scope="row">{{rifa[0] }}</th>
+                    <td>{{rifa[1]}}</td>
+                    <td>{{rifa[2]}}</td>
+                    <td>{{rifa[3]}}</td>
+                    <td>{{rifa[4]}}</td>
+                    <th scope="col"><a class="btn btn-warning btn-sm" href="{{url_for('editar_rifa', idrifa=rifa[0])}}">Editar</a></th>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            <a href="{{url_for('nova_rifa') }}"><button class="btn btn-primary">Adicionar Nova Rifa</button></a>
+          </div>
+        </div>
+</div>
+    
+</body>
+</html>

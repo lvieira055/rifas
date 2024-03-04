@@ -193,7 +193,45 @@ def criar_contato(idcliente):
 
 @app.route('/nova_rifa', methods=['GET','POST'])
 def nova_rifa():
+    banco = Banco()
+    conn = banco.conexao.cursor()
+    conn = conn.execute("SELECT produto.nome from produto")
+    lista_produtos = conn.fetchall()
+
+    if request.method == 'POST':
+        produto = request.form['produto']
+        colunas = request.form['colunas']
+        linhas = request.form['linhas']
+        valor = request.form['valor']
+        banco = Banco()
+        conn = banco.conexao.cursor()
+        conn.execute("INSERT INTO rifa (premio, tamanho, status, valortotal) VALUES(?,?,?,?)",(produto, colunas*linhas, "Em andamento", valor))
+        banco.conexao.commit()
+        return redirect(url_for('rifas'))
+    return render_template('nova_rifa.html', produtos=lista_produtos)
+
+@app.route('/rifas', methods=['GET','POST'])
+def rifas():
+    banco = Banco()
+    conn = banco.conexao.cursor()
+    conn.execute('''SELECT rifa.id, produto.nome , rifa.tamanho, rifa.status, rifa.valortotal from rifa left join produto on rifa.premio = produto.codigo''')
+    lista_rifas = conn.fetchall()
+    conn.close()
+    return render_template('rifas.html', rifas=lista_rifas)
+
+
+@app.route('/editar_rifa/<string:idrifa>', methods=['GET','POST'])
+def editar_rifa(idrifa):
     pass
+
+@app.route('/calculaTamanho', methods=['GET','POST'])
+def calculaTamanho():
+    if request.method == 'POST':
+        colunas = request.form['colunas']
+        linhas = request.form['linhas']
+        tamanho = colunas * linhas
+        return redirect(url_for('nova_rifa',tamanho=tamanho))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
