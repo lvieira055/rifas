@@ -23,7 +23,7 @@
                     <th scope="col">Idade</th>
                     <th scope="col">Contato</th>
                     <th scope="col">Endereço</th>
-                    <th scope="col">nº</th>
+                    <th scope="col">nº casa</th>
                     <th scope="col">Cidade</th>
                     <th scope="col">Ação</th>
                   </tr>
@@ -32,12 +32,12 @@
                     {% for cliente in clientes %}
                   <tr>
                     <th scope="row">{{cliente[0] }}</th>
-                    <td>{{cliente[1] }}</td>
-                    <td>{{cliente[2] }}</td>
-                    <td>{{cliente[3] }}</td>
-                    <td>{{cliente[4] }}</td>
-                    <td>{{cliente[5] }}</td>
-                    <td>{{cliente[6] }}</td>
+                    <td>{{cliente[1]}}</td>
+                    <td>{{cliente[2]}}</td>
+                    <td>{{cliente[3]}}</td>
+                    <td>{{cliente[4]}}</td>
+                    <td>{{cliente[5]}}</td>
+                    <td>{{cliente[6]}}</td>
                     <th scope="col"><a class="btn btn-warning btn-sm" href="{{url_for('editar_cliente', idcliente=cliente[0])}}">Editar</a> <a class="btn btn-danger btn-sm" href="{{url_for('removerCliente', idcliente=cliente[0])}}">Remover</a></th>
                   </tr>
                   {% endfor %}

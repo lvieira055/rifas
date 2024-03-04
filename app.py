@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from banco import Banco
 app = Flask(__name__)
-#oi bb
 
 #conexao com o banco de dados
 
@@ -33,11 +32,32 @@ def novo_cliente():
         idade = request.form['idade']
         sexo = request.form['sexo']
         CPF = request.form['cpf']
+        telefone = request.form['telefone']
+        telefone2 = request.form['telefone2']
+        rua = request.form['rua']
+        numero_residencia = request.form['numero']
+        bairro = request.form['bairro']
+        cidade = request.form['cidade']
+        CEP = request.form['CEP']
 
         banco = Banco()
         conn = banco.conexao.cursor()
         conn.execute("INSERT INTO clientes (nome, idade, sexo, cpf) VALUES(?,?,?,?)",(nome, idade, sexo, CPF))
         banco.conexao.commit()
+
+        #pega o id que foi gerado para o produto para dar insert no estoque.
+        conn.execute("SELECT max(id) FROM clientes")
+        idcliente=  conn.fetchall()
+        #itera sobre o retorno do banco e insere o id produto no estoque junto com sua quantidade de estoque.
+        for cliente in idcliente:
+            print(cliente[0])
+            conn = banco.conexao.cursor()
+            conn.execute("INSERT INTO contato (idcliente, telefone, telefone2) VALUES(?,?,?)",(cliente[0], telefone, telefone2))
+            banco.conexao.commit()   
+
+            conn = banco.conexao.cursor()
+            conn.execute("INSERT INTO endereco (idcliente, rua, numero, bairro, cidade, CEP) VALUES(?,?,?,?,?,?)",(cliente[0], rua, numero_residencia, bairro, cidade, CEP))
+            banco.conexao.commit()       
         banco.conexao.close()
         return redirect(url_for('clientes'))
     return render_template('novo_cliente.html')
@@ -55,10 +75,15 @@ def removerCliente(idcliente):
 def editar_cliente(idcliente):
     banco = Banco()
     conn = banco.conexao.cursor()
-    conn.execute("select * from clientes where id = "+idcliente)
+
+    conn.execute('''select clientes.id, clientes.nome, clientes.idade, clientes.sexo,
+                  clientes.cpf, contato.telefone, contato.telefone2, endereco.rua, endereco.numero,
+                  endereco.bairro, endereco.cidade, endereco.cep from clientes
+                    left join contato on contato.idcliente = clientes.id
+                    left join endereco on endereco.idcliente = clientes.id
+                 where clientes.id = '''+idcliente)
     
     cliente = conn.fetchall()
-
     if request.method == 'POST':
         nome = request.form['nome']
         idade = request.form['idade']
@@ -165,8 +190,6 @@ def criar_contato(idcliente):
     banco.conexao.close()
     return render_template('novo_contato.html', cliente=idcliente)
     
-
-
 
 @app.route('/nova_rifa', methods=['GET','POST'])
 def nova_rifa():

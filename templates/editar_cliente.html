@@ -14,32 +14,67 @@
             </div>
             <div class="card-body">
         {% for cli in cliente%}
-        <h1>Alterar cliente</h1>
-        <form action="{{ url_for('editar_cliente',idcliente=cli[0])}}" method="POST">
-            <div class="mb-3">
+        <h1>Cadastro de {{cli[1]}}</h1>
+        <div class="card-body">
+            <form action="{{ url_for('editar_cliente',idcliente=cli[0])}}" method="POST" class="row g-3">
+                <div class="col-md-6">
                 <label for="nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" value={{cli[1]}}>
-            </div>
-            <div class="mb-3">
-                <label for="idade" class="form-label">Idade</label>
-                <input type="number" class="form-control" id="idade" name="idade" placeholder="Digite sua idade" value={{cli[2]}} required>
-            </div>
-            <div class="mb-3">
-                <label for="sexo" class="form-label">Sexo</label>
-                <input type="text" class="form-control" id="sexo" name="sexo" placeholder="Digite seu sexo" value={{cli[3]}} required>
-            </div>
-            <div class="mb-3">
-                <label for="cpf" class="form-label">CPF</label>
-                <input type="text" class="form-control" name="cpf" id="cpf" placeholder="999.999.999-99" value={{cli[4]}} required>
-            </div>
-            <div class="d-grid gap-2">
-                <input class="btn btn-primary" type="submit" value="Alterar Cliente"></input>
-              </div><br>
-        </form>
-        <div class="d-grid gap-2">
-            <a href="{{url_for('novo_contato',idcliente=cli[0]) }}" class="btn btn-primary" type="submit">Contato </a><a class="btn btn-primary" type="submit">Endereço</a>
+                <input type="nome" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" value="{{cli[1]}}" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="idade" class="form-label">Idade</label>
+                    <input type="number" class="form-control" id="idade" name="idade" placeholder="Digite sua idade" value="{{cli[2]}}" required>
+                </div><div></div>
+                <div class="col-md-3">
+                    <label for="sexo" class="form-label">Sexo</label>
+                    <select class="form-control" id="sexo" name="sexo"  required>
+                        <option selected>Escolha</option>
+                        <option>Masculino</option>
+                        <option>Feminino</option>
+                        <option>Outro</option>
+                        <option  selected="selected">{{cli[3]}}</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="cpf" class="form-label">CPF</label>
+                    <input type="text" class="form-control" maxlength="14" name="cpf" id="cpf" placeholder="999.999.999-99" value="{{cli[4]}}" required>
+                </div>
+                <div class="card-header mt-4">
+                    Informações adicionais
+                </div>
+                <div class="col-md-4">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input type="text" class="form-control" name="telefone" id="telefone" placeholder="(DDD) 99999-9999" value="{{cli[5]}}" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="telefone2" class="form-label">Telefone Secundário</label>
+                    <input type="text" class="form-control" name="telefone2" id="telefone2" placeholder="(DDD) 99999-9999" value="{{cli[6]}}">
+                </div>
+                <div class="col-md-5">
+                    <label for="rua" class="form-label">Rua</label>
+                    <input type="text" class="form-control" name="rua" id="rua" placeholder="Rua parana" value="{{cli[7]}}" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="numero" class="form-label">Nº residencia</label>
+                    <input type="text" class="form-control" name="numero" id="numero" placeholder="9999" value="{{cli[8]}}" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="bairro" class="form-label">Bairro</label>
+                    <input type="text" class="form-control" name="bairro" id="bairro" placeholder="Centro" value="{{cli[9]}}" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="cidade" class="form-label">Cidade</label>
+                    <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cascavel" value="{{cli[10]}}" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="CEP" class="form-label">CEP</label>
+                    <input type="text" class="form-control" name="CEP" id="CEP" placeholder="00.000-000" value="{{cli[11]}}" required>
+                </div>
+                <div class="col-12">
+                <input class="btn btn-primary" type="submit" value="Salvar Alteração" ></input>
+                </div>
+            </form>
         </div>
-    </div>
     {%endfor%}
 </body>
 </html>
