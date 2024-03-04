@@ -53,9 +53,9 @@ class Banco():
         c = self.conexao.cursor()
         #tabela nome
         c.execute('''CREATE TABLE
-        IF NOT EXISTS nome (
+        IF NOT EXISTS lance (
             idrifa INTEGER,
-            nome TEXT NOT NULL,
+            quantidade integer NOT NULL,
             idcliente INTEGER NOT NULL,
             valor DOUBLE NOT NULL,
             pago TEXT NOT NULL,
@@ -72,6 +72,7 @@ class Banco():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             premio INTEGER NOT NULL,
             status TEXT,
+            tamanho INTEGER NOT NULL,
             valortotal DOUBLE,
             FOREIGN KEY(premio) references produto(codigo)
         )''')
